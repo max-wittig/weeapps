@@ -1,0 +1,22 @@
+stages:
+  - lint
+
+.lint:
+  stage: lint
+  except:
+    - master
+
+black-lint:
+  image: python:3.7-alpine
+  extends: .lint
+  script:
+    - poetry install --no-root
+    - poetry run black --check backend
+
+prettier-lint:
+  image: node:13
+  extends: .lint
+  script:
+    - yarn
+    - yarn lint:prettier
+    - yarn lint:vue
