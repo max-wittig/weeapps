@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <h1>Notes</h1>
+  <div id="notes">
     <user-count />
-    <note-add-element />
+    <note-add-element id="note-add-element" />
     <div id="note-container">
       <Note
         v-for="note in notes" 
@@ -49,8 +48,17 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-    text-align: center;
+#note-add-element {
+    justify-content: center;
+}
+#notes {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  margin-top: 60px;
+  overflow: hidden;
+  text-align: center;
 }
 #note-container {
     display: flex;
