@@ -17,6 +17,11 @@ export default {
     NumberDisplay,
     UserCount,
     ResetButton,
+  },
+  mounted() {
+    if(this.$socket.readyState === this.$socket.OPEN) {
+        this.$socket.sendObj({"update_request": true});
+    }
   }
 };
 </script>

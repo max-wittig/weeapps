@@ -23,6 +23,9 @@ class WeeappsWebsocketConsumer(WebsocketConsumer):
         )
         self.accept()
         r.incr("users_online")
+        self.update_client()
+
+    def update_client(self):
         self.send_status()
         self.send_notes()
 
@@ -92,6 +95,8 @@ class WeeappsWebsocketConsumer(WebsocketConsumer):
             self.receive_notes(text_data_json)
         elif text_data_json.get("note_delete"):
             self.receive_notes_delete(text_data_json)
+        elif text_data_json.get("update_request"):
+            self.update_client()
 
     def counter_event(self, event):
         self.send(text_data=json.dumps({"number": int(r.get("number"))}))

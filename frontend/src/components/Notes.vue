@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Notes</h1>
+    <user-count />
     <note-add-element />
     <div id="note-container">
       <Note
@@ -17,12 +18,14 @@
 <script>
 import Note from "./Notes/Note.vue";
 import NoteAddElement from "./Notes/NoteAddElement.vue";
+import UserCount from "./UserCount.vue";
 
 export default {
     name: "Notes",
     components: {
         Note,
         NoteAddElement,
+        UserCount,
     },
     data() {
         return {
@@ -33,8 +36,13 @@ export default {
         this.$options.sockets.onmessage = (msg) => {
             const data = JSON.parse(msg.data);
             if (data.notes) {
-                this.notes = data.notes
+                this.notes = data.notes;
             }
+        }
+    },
+    mounted() {
+        if(this.$socket.readyState === this.$socket.OPEN) {
+            this.$socket.sendObj({"update_request": true});
         }
     }
 }
