@@ -1,6 +1,6 @@
 <template>
   <div id="notes">
-    <user-count />
+    <user-count id="user-count" />
     <note-add-element id="note-add-element" />
     <div id="note-container">
       <Note
@@ -10,6 +10,7 @@
         :title="note.title"
         :color="note.color"
         :description="note.description"
+        :expire-at="note.expire_at"
       />
     </div>
   </div>
@@ -28,7 +29,13 @@ export default {
     },
     data() {
         return {
-            "notes": [{"title": "", "description": "", "color": "white", "id": 0}]
+            "notes": [{
+                "title": "",
+                "description": "",
+                "color": "white",
+                "id": 0,
+                "expireAt": ""
+            }]
         }
     },
     beforeMount() {
@@ -48,6 +55,9 @@ export default {
 </script>
 
 <style scoped>
+#user-count {
+    text-align: center;
+}
 #note-add-element {
     justify-content: center;
 }
@@ -58,15 +68,14 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   overflow: hidden;
-  text-align: center;
 }
 #note-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: baseline;
-    align-content: center;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  align-content: center;
+  width: 100%;
 }
 </style>

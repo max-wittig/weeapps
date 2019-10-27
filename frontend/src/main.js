@@ -29,6 +29,9 @@ const websocketServer =
   process.env.VUE_APP_WEBSOCKET_SERVER_URL || "ws://127.0.0.1:8000";
 Vue.use(VueNativeSock, `${websocketServer}/ws/`, { format: "json" });
 
+import moment from 'moment';
+Object.defineProperty(Vue.prototype, '$moment', { value: moment });
+
 new Vue({
   router,
   render: h => h(App)

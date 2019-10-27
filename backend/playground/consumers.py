@@ -36,7 +36,7 @@ class WeeappsWebsocketConsumer(WebsocketConsumer):
         )
 
     def send_notes_event(self, event):
-        fields = ["id", "title", "description", "color", "does_expire"]
+        fields = ["id", "title", "description", "color", "expire_at"]
         notes = Note.objects.all().values(*fields)
         self.send(text_data=json.dumps({"notes": list(notes)}, cls=DjangoJSONEncoder))
 
@@ -92,11 +92,15 @@ class WeeappsWebsocketConsumer(WebsocketConsumer):
         note_expire = text_data_json["note_expire"]
         note = Note.objects.get(id=note_expire["id"])
         expire = note_expire["expire"]
-        if expire == 0:
-            note.does_expire = False
+        if expire == -1:
+            note.expire_at = None
         else:
-            note.does_expire = True
-            note.expire_at = maya.now().add(seconds=expire).datetime()
+            if note.expire_at:
+                temp_expire_at = maya.MayaDT.from_datetime(note.expire_at)
+            else:
+                temp_expire_at = maya.now()
+            temp_expire_at = temp_expire_at.add(seconds=expire)
+            note.expire_at = temp_expire_at.datetime()
         note.save()
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name, {"type": "send_notes_event"}

@@ -2,6 +2,9 @@
   <div>
     <md-card :class="color">
       <md-card-header>
+        <div v-if="expireIn">
+          Expires in {{ expireIn }} minutes
+        </div>
         <div class="md-title">
           {{ title }}
         </div>
@@ -12,8 +15,11 @@
       </md-card-content>
 
       <md-card-actions>
-        <md-button @click="expire">
-          <md-icon>access_time</md-icon> {{ expireText }}
+        <md-button @click="expire(-1)">
+          <md-icon>access_time</md-icon> Reset
+        </md-button>
+        <md-button @click="expire(60 * 60)">
+          <md-icon>access_time</md-icon> +1 hour
         </md-button>
         <md-button @click="deleteNote">
           Delete
@@ -23,8 +29,6 @@
   </div>
 </template>
 <script>
-import { EXPIRES, EXPIRES_IN_SECONDS } from "./config";
-
 export default {
     name: "Note",
     props: {
@@ -47,6 +51,11 @@ export default {
           type: Number,
           default: -1,
           required: true,
+        },
+        expireAt: {
+          type: String,
+          default: "",
+          required: false,
         }
     },
     data() {
@@ -55,41 +64,19 @@ export default {
       }
     },
     computed: {
-      expireText: function() {
-        if (this.expireNumber == EXPIRES.THIRTY_MINUTES) {
-          return "30 minutes";
-        }
-        if (this.expireNumber == EXPIRES.ONE_HOUR) {
-          return "1 hour";
-        }
-        if (this.expireNumber == EXPIRES.FIVE_HOURS) {
-          return "5 hours";
-        }
-        if (this.expireNumber == EXPIRES.FIFTEEN_HOURS) {
-          return "15 hours";
-        }
-        if (this.expireNumber == EXPIRES.ONE_DAY) {
-          return "1 day";
-        }
-        if (this.expireNumber == EXPIRES.ONE_WEEK) {
-          return "1 week";
-        }
-        return "Never";
-      }
+      expireIn: function() {
+        return this.$moment(this.expireAt).diff(this.$moment(), "minutes");
+      },
     },
     methods: {
       deleteNote() {
         this.$socket.sendObj({note_delete: this.id});
       },
-      expire() {
-        this.expireNumber += 1;
-        if (this.expireNumber > Object.keys(EXPIRES).length) {
-          this.expireNumber = 0;
-        }
+      expire(seconds) {
         this.$socket.sendObj({
           note_expire: {
             "id": this.id, 
-            "expire": EXPIRES_IN_SECONDS[this.expireNumber]
+            "expire": seconds,
           }
         });
       }
