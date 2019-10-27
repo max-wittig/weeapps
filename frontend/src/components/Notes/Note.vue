@@ -5,6 +5,9 @@
         <div v-if="expireIn">
           Expires in {{ expireIn }} minutes
         </div>
+        <div v-else>
+          Expires never
+        </div>
         <div class="md-title">
           {{ title }}
         </div>
@@ -58,15 +61,17 @@ export default {
           required: false,
         }
     },
-    data() {
-      return {
-        expireNumber: 0,
-      }
-    },
     computed: {
       expireIn: function() {
         return this.$moment(this.expireAt).diff(this.$moment(), "minutes");
       },
+    },
+    watch: {
+      expireAt: function() {
+        if (this.expireIn <= 0) {
+          this.deleteNote();
+        }
+      }
     },
     methods: {
       deleteNote() {

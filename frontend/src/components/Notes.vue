@@ -4,9 +4,9 @@
     <note-add-element id="note-add-element" />
     <div id="note-container">
       <Note
-        v-for="note in notes" 
+        v-for="note in notes"
         :id="note.id"
-        :key="note.id"
+        :key="`${note.id} ${componentKey}`"
         :title="note.title"
         :color="note.color"
         :description="note.description"
@@ -29,6 +29,7 @@ export default {
     },
     data() {
         return {
+            componentKey: 0,
             "notes": [{
                 "title": "",
                 "description": "",
@@ -49,6 +50,12 @@ export default {
     mounted() {
         if(this.$socket.readyState === this.$socket.OPEN) {
             this.$socket.sendObj({"update_request": true});
+            window.setInterval(() => {
+              this.$socket.sendObj({"update_request": true});
+              // this will force an update of all notes.
+              // Find a better way todo this maybe
+              this.componentKey += 1;
+            }, 1000 * 60);
         }
     }
 }
