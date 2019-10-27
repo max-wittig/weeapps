@@ -48,15 +48,17 @@ export default {
         }
     },
     mounted() {
-        if(this.$socket.readyState === this.$socket.OPEN) {
-            this.$socket.sendObj({"update_request": true});
-            window.setInterval(() => {
-              this.$socket.sendObj({"update_request": true});
-              // this will force an update of all notes.
-              // Find a better way todo this maybe
-              this.componentKey += 1;
-            }, 1000 * 60);
+      window.setInterval(() => {
+        if (this.$socket.readyState === this.$socket.OPEN) {
+          this.$socket.sendObj({"update_request": true});
+          // this will force an update of all notes.
+          // Find a better way to do this maybe
+          this.componentKey += 1;
         }
+      }, 1000 * 60);
+      if(this.$socket.readyState === this.$socket.OPEN) {
+          this.$socket.sendObj({"update_request": true});
+      }
     }
 }
 </script>

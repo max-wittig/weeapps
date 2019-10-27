@@ -66,13 +66,6 @@ export default {
         return this.$moment(this.expireAt).diff(this.$moment(), "minutes");
       },
     },
-    watch: {
-      expireAt: function() {
-        if (this.expireIn <= 0) {
-          this.deleteNote();
-        }
-      }
-    },
     methods: {
       deleteNote() {
         this.$socket.sendObj({note_delete: this.id});
@@ -84,6 +77,13 @@ export default {
             "expire": seconds,
           }
         });
+      }
+    },
+    mounted() {
+      // this seems hacky. Every note is created from scratch
+      // every minute
+      if (this.expireIn <= 0) {
+        this.deleteNote();
       }
     }
 }
