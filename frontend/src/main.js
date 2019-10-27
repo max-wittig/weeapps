@@ -1,6 +1,17 @@
 import Vue from "vue";
 import App from "./App.vue";
-import { MdButton, MdCard, MdIcon } from "vue-material/dist/components";
+import {
+  MdButton,
+  MdCard,
+  MdIcon,
+  MdApp,
+  MdTabs,
+  MdContent,
+  MdDrawer
+} from "vue-material/dist/components";
+import MdAppToolBar from "vue-material/dist/components/MdApp";
+import MdListItem from "vue-material/dist/components/MdList";
+import MdToolBar from "vue-material/dist/components/MdToolbar";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 import VueRouter from "vue-router";
@@ -12,6 +23,13 @@ import VueNativeSock from "vue-native-websocket";
 Vue.use(MdIcon);
 Vue.use(MdCard);
 Vue.use(MdButton);
+Vue.use(MdApp);
+Vue.use(MdTabs);
+Vue.use(MdAppToolBar);
+Vue.use(MdContent);
+Vue.use(MdListItem);
+Vue.use(MdDrawer);
+Vue.use(MdToolBar);
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
@@ -29,8 +47,8 @@ const websocketServer =
   process.env.VUE_APP_WEBSOCKET_SERVER_URL || "ws://127.0.0.1:8000";
 Vue.use(VueNativeSock, `${websocketServer}/ws/`, { format: "json" });
 
-import moment from 'moment';
-Object.defineProperty(Vue.prototype, '$moment', { value: moment });
+import moment from "moment";
+Object.defineProperty(Vue.prototype, "$moment", { value: moment });
 
 new Vue({
   router,

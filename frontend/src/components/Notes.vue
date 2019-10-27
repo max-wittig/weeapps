@@ -1,6 +1,5 @@
 <template>
   <div id="notes">
-    <user-count id="user-count" />
     <note-add-element id="note-add-element" />
     <div id="note-container">
       <Note
@@ -18,14 +17,12 @@
 <script>
 import Note from "./Notes/Note.vue";
 import NoteAddElement from "./Notes/NoteAddElement.vue";
-import UserCount from "./UserCount.vue";
 
 export default {
     name: "Notes",
     components: {
         Note,
         NoteAddElement,
-        UserCount,
     },
     data() {
         return {
@@ -76,14 +73,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
-  overflow: hidden;
 }
 #note-container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: baseline;
+  justify-content: center;
+  align-items: stretch;
   align-content: center;
   width: 100%;
 }

@@ -59,7 +59,6 @@ export default {
     h1 {
         font-size: 300px;
         cursor: pointer;
-        background-color: white;
         user-select: none;
     }
     div { outline-style:none;}

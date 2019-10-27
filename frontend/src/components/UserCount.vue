@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p id="user-count">
+    <span class="md-title">
       Users online: {{ usersOnline }}
-    </p>
+    </span>
   </div>
 </template>
 
@@ -23,7 +23,4 @@ export default {
 }
 </script>
 <style scoped>
-    p {
-        font-size: 30px;
-    }
 </style>
