@@ -11,6 +11,26 @@
           </div>
         </md-app-toolbar>
         <md-app-content id="content">
+          <md-tabs md-sync-route>
+            <md-tab
+              id="tab-home"
+              md-label="Home"
+              to="/"
+              exact
+            />
+            <md-tab
+              id="tab-notes"
+              md-label="Notes"
+              to="/notes"
+              exact
+            />
+            <md-tab
+              id="tab-counter"
+              md-label="Counter"
+              to="/counter"
+              exact
+            />
+          </md-tabs>
           <router-view />
         </md-app-content>
       </md-app>

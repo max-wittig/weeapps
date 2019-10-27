@@ -17,16 +17,18 @@
           maxlength="200"
         >
       </div>
-      <div class="element-div">
-        <select v-model="color">
-          <option
-            v-for="c in colors"
-            :key="c"
-          >
-            {{ c }}
-          </option>
-        </select>
-      </div>
+      <select
+        id="color"
+        v-model="color"
+        md-dense
+      >
+        <option
+          v-for="c in colors"
+          :key="c"
+        >
+          {{ c }}
+        </option>
+      </select>
       <md-button
         class="md-primary md-raised"
         @click="addNote"
@@ -62,7 +64,12 @@ export default {
             return colors[Math.floor(Math.random()*colors.length)]
         },
         addNote() {
-            this.$socket.sendObj({"note": {title: this.title, description: this.description, color: this.color}});
+            this.$socket.sendObj(
+              {"note": {
+                title: this.title, 
+                description: this.description, 
+                color: this.color}
+              });
             this.title = "";
             this.description = "";
             this.color = this.getRandomColor();

@@ -7,11 +7,14 @@ import {
   MdApp,
   MdTabs,
   MdContent,
-  MdDrawer
+  MdDrawer,
+  MdMenu,
 } from "vue-material/dist/components";
 import MdAppToolBar from "vue-material/dist/components/MdApp";
 import MdListItem from "vue-material/dist/components/MdList";
 import MdToolBar from "vue-material/dist/components/MdToolbar";
+import MdSelect from "vue-material/dist/components/MdField";
+import MdOption from "vue-material/dist/components/MdField";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 import VueRouter from "vue-router";
@@ -30,6 +33,9 @@ Vue.use(MdContent);
 Vue.use(MdListItem);
 Vue.use(MdDrawer);
 Vue.use(MdToolBar);
+Vue.use(MdSelect);
+Vue.use(MdOption);
+Vue.use(MdMenu);
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
