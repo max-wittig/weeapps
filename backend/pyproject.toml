@@ -6,11 +6,12 @@ authors = ["Max Wittig <max.wittig95@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 django = "^2.2.5"
 channels = "^2.3.0"
 channels_redis = "^2.4.0"
 redis = "^3.3.8"
+maya = "^0.6.1"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^19.3b0", allows-prereleases = true}

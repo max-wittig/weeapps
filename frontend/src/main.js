@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-import { MdButton, MdCard } from "vue-material/dist/components";
+import { MdButton, MdCard, MdIcon } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 import VueRouter from "vue-router";
@@ -9,6 +9,7 @@ import Notes from "./components/Notes.vue";
 import Main from "./components/Main.vue";
 import VueNativeSock from "vue-native-websocket";
 
+Vue.use(MdIcon);
 Vue.use(MdCard);
 Vue.use(MdButton);
 Vue.use(VueRouter);

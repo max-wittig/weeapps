@@ -5,6 +5,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 import redis
 import os
+import maya
 
 
 redis_ip = os.getenv("REDIS_IP", "127.0.0.1")
@@ -87,6 +88,20 @@ class WeeappsWebsocketConsumer(WebsocketConsumer):
             self.room_group_name, {"type": "send_notes_event"}
         )
 
+    def receive_notes_expire(self, text_data_json):
+        note_expire = text_data_json["note_expire"]
+        note = Note.objects.get(id=note_expire["id"])
+        expire = note_expire["expire"]
+        if expire == 0:
+            note.does_expire = False
+        else:
+            note.does_expire = True
+            note.expire_at = maya.now().add(seconds=expire).datetime()
+        note.save()
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name, {"type": "send_notes_event"}
+        )
+
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         if text_data_json.get("operation"):
@@ -95,6 +110,8 @@ class WeeappsWebsocketConsumer(WebsocketConsumer):
             self.receive_notes(text_data_json)
         elif text_data_json.get("note_delete"):
             self.receive_notes_delete(text_data_json)
+        elif text_data_json.get("note_expire"):
+            self.receive_notes_expire(text_data_json)
         elif text_data_json.get("update_request"):
             self.update_client()
 
