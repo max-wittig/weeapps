@@ -10,11 +10,13 @@
           id="title-input"
           v-model="title"
           maxlength="50"
+          v-on:keyup.enter="addNote"
         >
         <input
           id="description-input"
           v-model="description"
           maxlength="200"
+          v-on:keyup.enter="addNote"
         >
       </div>
       <select

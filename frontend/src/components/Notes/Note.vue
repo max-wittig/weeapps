@@ -90,7 +90,8 @@ export default {
 </script>
 <style scoped>
   .md-card {
-    width: 320px;
+    min-width: 10vw;
+    width: 20vw;
     margin: 4px;
     vertical-align: top;
     align-self: flex-end;
